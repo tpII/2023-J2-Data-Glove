@@ -11,5 +11,5 @@ El objetivo principal del proyecto es crear una interfaz hombre-máquina con for
 
 ***
 
-### Wiki
-* Bitácora del proyecto
+### Links
+* [Wiki - Bitácora del proyecto](https://github.com/tpII/2023-J2-Data-Glove/wiki)
