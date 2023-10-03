@@ -41,16 +41,21 @@ function init() {
     camera.position.x = 0;
     camera.position.y = 0;
     camera.position.z = 0.5;
+
+    const socket = io()
 }
 
 function render(){
-    x = x + 0.30;
-    y = y + 0.30;
-    z = z + 0.30;
-
-    // Rota la figura un cierto angulo en radianes, determinado por las coordenadas (x, y, z)
-    mesh.rotation.set(- x * Math.PI / 180, - y * Math.PI / 180, - z * Math.PI / 180)
-    line.rotation.set(- x * Math.PI / 180, - y * Math.PI / 180, - z * Math.PI / 180)
+    socket.on('data', (data) => {
+        //console.log(data.x);
+        x = data.x;
+        y = data.y;
+        z = data.z;
+        // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
+        mesh.rotation.set(- x * Math.PI / 180, - y * Math.PI / 180, - z * Math.PI / 180)
+        line.rotation.set(- x * Math.PI / 180, - y * Math.PI / 180, - z * Math.PI / 180)
+    });
+    
     renderer.render( scene, camera );
     requestAnimationFrame(render);
 }
