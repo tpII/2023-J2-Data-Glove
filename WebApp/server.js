@@ -8,6 +8,7 @@ const io = new Server(server);
 
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
 app.use('/main.js', express.static(__dirname + '/views/main.js'));
+app.use('/three/three.module.js', express.static(__dirname + '/node_modules/three/build/three.module.js'));
 app.set('PORT', port)
 
 // Configurar middleware para analizar JSON y URL-encoded
