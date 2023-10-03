@@ -3,6 +3,7 @@ import * as THREE from '/three/three.module.js';
 var camera, scene, renderer;
 var geometry, material, mesh, edges, line;
 var x, y, z;
+const socket = io()
 
 init();
 render();
@@ -41,8 +42,6 @@ function init() {
     camera.position.x = 0;
     camera.position.y = 0;
     camera.position.z = 0.5;
-
-    const socket = io()
 }
 
 function render(){
