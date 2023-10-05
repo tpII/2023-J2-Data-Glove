@@ -43,7 +43,7 @@ function init() {
     camera.position.y = 0;
     camera.position.z = 0.5;
 
-    document.getElementById('datos').innerHTML = "Aungulos de rotación:  X:  Y:  Z: ";
+    document.getElementById('datos').innerHTML = "Aungulos de rotación:  X: 0; Y: 0; Z: 0";
 }
 
 function render(){
@@ -53,11 +53,11 @@ function render(){
         y = data.y;
         z = data.z;
 
-        document.getElementById('datos').innerHTML = "Aungulos de rotación  X: " + x + "; Y: " + y + "; Z: " + z;
+        document.getElementById('datos').innerHTML = "Aungulos de rotación  X: " + x.toFixed(5) + "; Y: " + y.toFixed(5) + "; Z: " + z.toFixed(5);
 
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
-        mesh.rotation.set(- x * Math.PI / 180, - y * Math.PI / 180, - z * Math.PI / 180)
-        line.rotation.set(- x * Math.PI / 180, - y * Math.PI / 180, - z * Math.PI / 180)
+        mesh.rotation.set(x, y, z)
+        line.rotation.set(x, y, z)
     });
     
     renderer.render( scene, camera );
