@@ -20,7 +20,7 @@ float halfSEq_4 = 0.5f * SEq_4;
 float twoSEq_1 = 2.0f * SEq_1;
 float twoSEq_2 = 2.0f * SEq_2;
 float twoSEq_3 = 2.0f * SEq_3;
-29
+
 // Normalise the accelerometer measurement
 norm = sqrt(a_x * a_x + a_y * a_y + a_z * a_z);
 a_x /= norm;
