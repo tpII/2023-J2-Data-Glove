@@ -3,8 +3,6 @@
 #include <Adafruit_MPU6050.h>
 
 Adafruit_MPU6050 mpu;
-HTTPClient http;
-WiFiClient client;
 const char *ssid = "Personal-4B1-5GHz"; // The name of the Wi-Fi network that will be created
 const char *password = "F7C090C4B1";   // The password required to connect to it, leave blank for an open network
 String url = "http://192.168.0.";
@@ -60,6 +58,9 @@ void loop()
 
   Serial.print("Temperatura (C): ");
   Serial.println(temp.temperature);
+
+  HTTPClient http;
+  WiFiClient client;
   
   if (http.begin(client, url)) //Iniciar conexión
   {
