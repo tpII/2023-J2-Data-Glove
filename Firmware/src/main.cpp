@@ -3,9 +3,9 @@
 #include <Adafruit_MPU6050.h>
 
 Adafruit_MPU6050 mpu;
-const char *ssid = "TeleCentro-74e9"; // The name of the Wi-Fi network that will be created
-const char *password = "MWYXMDMZKZNJ";   // The password required to connect to it, leave blank for an open network
-String url = "http://google.com";
+const char *ssid = "Personal-4B1-5GHz"; // The name of the Wi-Fi network that will be created
+const char *password = "F7C090C4B1";   // The password required to connect to it, leave blank for an open network
+String url = "http://192.168.0.";
 
 void setup() {
   Serial.begin(115200);
@@ -59,17 +59,16 @@ void loop()
   Serial.print("Temperatura (C): ");
   Serial.println(temp.temperature);
 
-  delay(1000);
   HTTPClient http;
   WiFiClient client;
-
+  
   if (http.begin(client, url)) //Iniciar conexión
   {
-    Serial.print("[HTTP] GET...\n");
-    int httpCode = http.GET();  // Realizar petición
+    Serial.print("[HTTP] POST...\n");
+    int httpCode = http.POST(g.gyro.y);  // Realizar petición
 
     if (httpCode > 0) {
-      Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+      Serial.printf("[HTTP] POST... code: %d\n", httpCode);
 
       if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
         String payload = http.getString();  // Obtener respuesta
@@ -77,14 +76,12 @@ void loop()
       }
     }
     else {
-      Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+      Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
     }
-
     http.end();
   }
   else {
     Serial.printf("[HTTP} Unable to connect\n");
   }
-
-  delay(5000);
+  delay(1000);
 }
