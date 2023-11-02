@@ -86,5 +86,5 @@ void loop()
     Serial.printf("[HTTP} Unable to connect\n");
   }
 
-  delay(30000);
+  delay(5000);
 }
