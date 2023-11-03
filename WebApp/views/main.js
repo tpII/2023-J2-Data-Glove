@@ -43,21 +43,22 @@ function init() {
     camera.position.y = 0;
     camera.position.z = 0.5;
 
-    document.getElementById('datos').innerHTML = "Aungulos de rotación:  X: 0; Y: 0; Z: 0";
+    document.getElementById('datos').innerHTML = "Cuaternión:  X: 0; Y: 0; Z: 0; W: 0";
 }
 
 function render(){
     socket.on('data', (data) => {
         //console.log(data.x);
-        x = data.x;
-        y = data.y;
-        z = data.z;
+        // x = data.x;
+        // y = data.y;
+        // z = data.z;
 
-        document.getElementById('datos').innerHTML = "Aungulos de rotación  X: " + x.toFixed(5) + "; Y: " + y.toFixed(5) + "; Z: " + z.toFixed(5);
+        document.getElementById('datos').innerHTML = "Cuaternión  X: " + data.SEq2 + "; Y: " + data.SEq3 + "; Z: " + data.SEq1 + "; W: " + data.SEq4;
 
+        const quaternion = new THREE.Quaternion(data.SEq1, data.SEq2, data.SEq3, data.SEq4);
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
-        mesh.rotation.set(x, y, z)
-        line.rotation.set(x, y, z)
+        mesh.rotation.setFromQuaternion(quaternion)
+        line.rotation.setFromQuaternion(quaternion)
     });
     
     renderer.render( scene, camera );
