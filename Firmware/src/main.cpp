@@ -1,29 +1,31 @@
 #include <ESP8266WiFi.h>        // Include the Wi-Fi library
 #include <ESP8266HTTPClient.h>
 #include <Adafruit_MPU6050.h>
+#include <filtro.h>
+#include <string>
 
 Adafruit_MPU6050 mpu;
-const char *ssid = "Personal-4B1-5GHz"; // The name of the Wi-Fi network that will be created
-const char *password = "F7C090C4B1";   // The password required to connect to it, leave blank for an open network
-String url = "http://192.168.0.";
+const char *ssid = "DataGlove"; // The name of the Wi-Fi network that will be created
+const char *password = "laTercera";   // The password required to connect to it, leave blank for an open network
+String url = "http://192.168.4.7/data";
+extern float SEq_1, SEq_2, SEq_3, SEq_4;
+uint16_t count;
 
 void setup() {
+
+  count = 0;
   Serial.begin(115200);
   delay(10);
   Serial.println('\n');
 
-  /* WiFi.softAP(ssid, password);             // Start the access point
-  Serial.print("Access Point \"");
+  WiFi.softAP(ssid, password);             // Start the access point
+  Serial.println("Access Point");
   Serial.print(ssid);
-  Serial.println("\" started");
+  Serial.println("started");
 
-  Serial.print("IP address:\t");
-  Serial.println(WiFi.softAPIP());  */        // Send the IP address of the ESP8266 to the computer
+  Serial.println("IP address:");
+  Serial.println(WiFi.softAPIP());  
 
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) 
-    delay(500);
-  
   if (!mpu.begin()) {
     Serial.println("No se pudo encontrar un sensor MPU6050.");
     while (1);
@@ -39,49 +41,45 @@ void loop()
 {
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
+  filterUpdate(g.gyro.x, g.gyro.y, g.gyro.z, a.acceleration.x, a.acceleration.y, a.acceleration.z);
 
-  Serial.print("Acelerómetro (m/s^2): ");
-  Serial.print(a.acceleration.x);
-  Serial.print(", ");
-  Serial.print(a.acceleration.y);
-  Serial.print(", ");
-  Serial.print(a.acceleration.z);
-  Serial.println();
+  delay(1);
+  count++;
 
-  Serial.print("Giroscopio (rad/s): ");
-  Serial.print(g.gyro.x);
-  Serial.print(", ");
-  Serial.print(g.gyro.y);
-  Serial.print(", ");
-  Serial.print(g.gyro.z);
-  Serial.println();
+  if(count==1000){
+    count = 0;
+    HTTPClient http;
+    WiFiClient client;
+    
+    if (http.begin(client,url)) //Iniciar conexión
+    {
+      Serial.println("[HTTP] POST...\n");
+      std::string seq_1 = std::to_string(SEq_1);
+      std::string seq_2 = std::to_string(SEq_2);
+      std::string seq_3 = std::to_string(SEq_3);
+      std::string seq_4 = std::to_string(SEq_4);
+      std::string dataJsonSTD = "{\"SEq_1\":" + seq_1 + ",\"SEq_2\":" + seq_2 + ",\"SEq_3\":" + seq_3 + ",\"SEq_4\":" + seq_4 + "}";
+      String dataJson = String(dataJsonSTD.c_str());
+      Serial.println(dataJson);
+      http.addHeader("Content-Type", "text/plain");
+      int httpCode = http.POST("hola");  // Realizar petición
+      Serial.println(http.getSize());
 
-  Serial.print("Temperatura (C): ");
-  Serial.println(temp.temperature);
+      if (httpCode > 0) {
+        Serial.printf("[HTTP] POST... code: %d\r\n", httpCode);
 
-  HTTPClient http;
-  WiFiClient client;
-  
-  if (http.begin(client, url)) //Iniciar conexión
-  {
-    Serial.print("[HTTP] POST...\n");
-    int httpCode = http.POST(g.gyro.y);  // Realizar petición
-
-    if (httpCode > 0) {
-      Serial.printf("[HTTP] POST... code: %d\n", httpCode);
-
-      if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
-        String payload = http.getString();  // Obtener respuesta
-        Serial.println(payload);  // Mostrar respuesta por serial
+        if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+          String payload = http.getString();  // Obtener respuesta
+          Serial.println(payload);  // Mostrar respuesta por serial
+        }
       }
+      else {
+        Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
+      }
+      http.end();
     }
     else {
-      Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
+      Serial.printf("[HTTP} Unable to connect\n");
     }
-    http.end();
   }
-  else {
-    Serial.printf("[HTTP} Unable to connect\n");
-  }
-  delay(1000);
 }
