@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8000;
+const port = 80;
 const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
@@ -28,11 +28,11 @@ server.on('connection', (socket) => {
 app.post('/data', (req, res) => {
   const postData = req.body;
   // Conversion de grados a radianes
-  postData.x = - postData.x * Math.PI / 180;
-  postData.y = - postData.y * Math.PI / 180;
-  postData.z = - postData.z * Math.PI / 180;
+  // postData.x = - postData.x * Math.PI / 180;
+  // postData.y = - postData.y * Math.PI / 180;
+  // postData.z = - postData.z * Math.PI / 180;
   io.emit('data', postData);
-
+  console.log(postData)
   res.json({ message: 'POST request received', data: postData });
 });
 
