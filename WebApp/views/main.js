@@ -18,6 +18,7 @@ function init() {
     
     // Crea la escena
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
     geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
@@ -27,7 +28,7 @@ function init() {
 
     // Agrega lineas blancas para delimitar los bordes de las caras del cubo
     edges = new THREE.EdgesGeometry( geometry );
-    line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) ); 
+    line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) ); 
     scene.add( line );  
     
     // Inicializa el renderizador, habilitando el antialiasing
