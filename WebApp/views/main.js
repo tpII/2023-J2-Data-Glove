@@ -54,7 +54,7 @@ function render(){
         // y = data.y;
         // z = data.z;
 
-        document.getElementById('datos').innerHTML = "Cuaternión  X: " + data.SEq2 + "; Y: " + data.SEq3 + "; Z: " + data.SEq1 + "; W: " + data.SEq4;
+        document.getElementById('datos').innerHTML = "Cuaternión  X: " + data.SEq1.toFixed(4) + "; Y: " + data.SEq2.toFixed(4) + "; Z: " + data.SEq3.toFixed(4) + "; W: " + data.SEq4.toFixed(4);
 
         const quaternion = new THREE.Quaternion(data.SEq1, data.SEq2, data.SEq3, data.SEq4);
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
