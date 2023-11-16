@@ -53,15 +53,10 @@ function init() {
 
 function render(){
     socket.on('data', (data) => {
-        //console.log(data.x);
-        // x = data.x;
-        // y = data.y;
-        // z = data.z;
         document.getElementById('cuaternionX').innerHTML = data.SEq1.toFixed(4);
         document.getElementById('cuaternionY').innerHTML = data.SEq2.toFixed(4);
         document.getElementById('cuaternionZ').innerHTML = data.SEq3.toFixed(4);
         document.getElementById('cuaternionW').innerHTML = data.SEq4.toFixed(4);
-        //document.getElementById('datos').innerHTML = "Cuaternión  X: " + data.SEq1.toFixed(4) + "; Y: " + data.SEq2.toFixed(4) + "; Z: " + data.SEq3.toFixed(4) + "; W: " + data.SEq4.toFixed(4);
 
         const quaternion = new THREE.Quaternion(data.SEq1, data.SEq2, data.SEq3, data.SEq4);
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)

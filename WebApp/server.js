@@ -28,10 +28,6 @@ server.on('connection', (socket) => {
 // POST route
 app.post('/data', (req, res) => {
   const postData = req.body;
-  // Conversion de grados a radianes
-  // postData.x = - postData.x * Math.PI / 180;
-  // postData.y = - postData.y * Math.PI / 180;
-  // postData.z = - postData.z * Math.PI / 180;
   io.emit('data', postData);
   console.log(postData)
   res.json({ message: 'POST request received', data: postData });
