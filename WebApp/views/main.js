@@ -2,26 +2,27 @@ import * as THREE from '/three/three.module.js';
 
 var camera, scene, renderer;
 var geometry, material, mesh, edges, line;
-var x, y, z;
+var container;
+var canvasWidth, canvasHeight;
 const socket = io()
 
 init();
 render();
 
 function init() {
-    x = 0;
-    y = 0;
-    z = 0;
-
+    container = document.getElementById('canvas');
+    document.body.appendChild(container);
+    canvasWidth = container.offsetWidth;
+    canvasHeight = container.offsetHeight;
     // Inicializa la camara de la escena
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+    camera = new THREE.PerspectiveCamera( 70, canvasWidth / canvasHeight, 0.01, 10 );
     
     // Crea la escena
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
-    geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+    geometry = new THREE.BoxGeometry( 0.3, 0.3, 0.3 );
     material = new THREE.MeshNormalMaterial();
     mesh = new THREE.Mesh( geometry, material );
     scene.add( mesh );
@@ -33,8 +34,8 @@ function init() {
     
     // Inicializa el renderizador, habilitando el antialiasing
     renderer = new THREE.WebGLRenderer( { antialias: true } );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
+    renderer.setSize( canvasWidth, canvasHeight );
+    container.appendChild( renderer.domElement );
 
     // Agrega un listener para ver si la ventana cambia de tamaño
     window.addEventListener( 'resize', resize, false );
@@ -44,7 +45,10 @@ function init() {
     camera.position.y = 0;
     camera.position.z = 0.5;
 
-    document.getElementById('datos').innerHTML = "Cuaternión:  X: 0; Y: 0; Z: 0; W: 0";
+    document.getElementById('cuaternionX').innerHTML = "1";
+    document.getElementById('cuaternionY').innerHTML = "0";
+    document.getElementById('cuaternionZ').innerHTML = "0";
+    document.getElementById('cuaternionW').innerHTML = "0";
 }
 
 function render(){
@@ -53,8 +57,11 @@ function render(){
         // x = data.x;
         // y = data.y;
         // z = data.z;
-
-        document.getElementById('datos').innerHTML = "Cuaternión  X: " + data.SEq1.toFixed(4) + "; Y: " + data.SEq2.toFixed(4) + "; Z: " + data.SEq3.toFixed(4) + "; W: " + data.SEq4.toFixed(4);
+        document.getElementById('cuaternionX').innerHTML = data.SEq1.toFixed(4);
+        document.getElementById('cuaternionY').innerHTML = data.SEq2.toFixed(4);
+        document.getElementById('cuaternionZ').innerHTML = data.SEq3.toFixed(4);
+        document.getElementById('cuaternionW').innerHTML = data.SEq4.toFixed(4);
+        //document.getElementById('datos').innerHTML = "Cuaternión  X: " + data.SEq1.toFixed(4) + "; Y: " + data.SEq2.toFixed(4) + "; Z: " + data.SEq3.toFixed(4) + "; W: " + data.SEq4.toFixed(4);
 
         const quaternion = new THREE.Quaternion(data.SEq1, data.SEq2, data.SEq3, data.SEq4);
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
@@ -67,7 +74,7 @@ function render(){
 }
 
 function resize(){
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = container.offsetWidth / container.offsetHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( container.offsetWidth, container.offsetHeight );
 }
