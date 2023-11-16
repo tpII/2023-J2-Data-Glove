@@ -29,7 +29,7 @@ function init() {
 
     // Agrega lineas blancas para delimitar los bordes de las caras del cubo
     edges = new THREE.EdgesGeometry( geometry );
-    line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) ); 
+    line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0x222021 } ) ); 
     scene.add( line );  
     
     // Inicializa el renderizador, habilitando el antialiasing

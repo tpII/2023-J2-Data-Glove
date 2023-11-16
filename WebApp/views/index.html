@@ -10,10 +10,15 @@
         font-family: Arial;
         display: inline-block;
         text-align: center;
+        height: 100%;
+        width: 100%;
+        margin: 0;
     }
     body {
 	    margin: 0;
 		overflow: hidden;
+        height: 100%;
+        width: 100%;
     }
     .content {
         padding: 10px;
@@ -28,6 +33,7 @@
     }
     .cards {
         max-width: 400px;
+        max-height: 250px;
         margin: 0 auto;
         display: grid; 
         grid-gap: 2rem;
@@ -38,9 +44,10 @@
     }
     #canvas {
         width: 100%;
-        height: 100px;
         margin: 0;
-        padding-bottom:25%;
+        position: absolute;
+        top: 250px;
+        bottom: 0;
     }
 
   </style>
@@ -58,8 +65,9 @@
             <p><span class="reading">W: <span id="cuaternionW"></p>
           </div>
         </div>
+        <div id="canvas"></div>
     </div>    
-    <div id="canvas"></div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/main.js"></script>
 </body>
