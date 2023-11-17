@@ -17,27 +17,46 @@ body {
 }
 .card {
     background-color: white;
-    box-shadow: 2px 2px 10px 1px rgba(140,140,140,.5);
-}
-.card-title {
+    box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
+  }
+  .card-title {
     color:#003366;
     font-weight: bold;
-}
-.cards {
-    max-width: 400px;
-    max-height: 250px;
+  }
+  .cards {
+    max-width: 800px;
     margin: 0 auto;
-    display: grid; 
-    grid-gap: 2rem;
+    display: grid; grid-gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
+  }
 .reading {
     font-size: 1rem;
 }
+
+.bootstrap-btn {
+	display: inline-block;
+	font-weight: 400;
+	color: #212529;
+	text-align: center;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	color: #fff;
+	background-color: #007bff;
+    margin: 2px;
+}
+
+.bootstrap-btn:hover{
+  	background-color: #0069d9;
+
+}
+
 #canvas {
     width: 100%;
     margin: 0;
     position: absolute;
-    top: 250px;
+    top: 240px;
     bottom: 0;
 }

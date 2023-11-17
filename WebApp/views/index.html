@@ -10,16 +10,22 @@
     <div class="content">
         <div class="cards">
           <div class="card">
-            <p class="card-title">Cuaternión</p>
+            <p class="card-title">Componentes del cuaternión</p>
             <p><span class="reading">X: <span id="cuaternionX"></p>
             <p><span class="reading">Y: <span id="cuaternionY"></p>
             <p><span class="reading">Z: <span id="cuaternionZ"></p>
             <p><span class="reading">W: <span id="cuaternionW"></p>
           </div>
+          <div class="card">
+            <p class="card-title">Animación 3D</p>
+            <button class="bootstrap-btn" id="scene1" onClick="changeScene(this)">Reset</button><br>
+            <button class="bootstrap-btn" id="scene2" onClick="changeScene(this)">Figuras</button><br>
+            <button class="bootstrap-btn">Mano</button>
+          </div>
         </div>
-        <div id="canvas"></div>
+        
     </div>    
-    
+    <div id="canvas"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/main.js"></script>
 </body>
