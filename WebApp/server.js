@@ -27,9 +27,8 @@ server.on('connection', (socket) => {
 
 // POST route
 app.post('/data', (req, res) => {
-  const postData = req.body;
+  const postData =JSON.parse(JSON.stringify(req.body));
   io.emit('data', postData);
-  console.log(postData)
   res.json({ message: 'POST request received', data: postData });
 });
 
