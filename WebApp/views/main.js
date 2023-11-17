@@ -53,12 +53,12 @@ function init() {
 
 function render(){
     socket.on('data', (data) => {
-        document.getElementById('cuaternionX').innerHTML = data.SEq1.toFixed(4);
-        document.getElementById('cuaternionY').innerHTML = data.SEq2.toFixed(4);
-        document.getElementById('cuaternionZ').innerHTML = data.SEq3.toFixed(4);
-        document.getElementById('cuaternionW').innerHTML = data.SEq4.toFixed(4);
+        document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
+        document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
+        document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
+        document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
 
-        const quaternion = new THREE.Quaternion(data.SEq1, data.SEq2, data.SEq3, data.SEq4);
+        const quaternion = new THREE.Quaternion(parseFloat(data.SEq_1), parseFloat(data.SEq_2), parseFloat(data.SEq_3), parseFloat(data.SEq_4));
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
         mesh.rotation.setFromQuaternion(quaternion)
         line.rotation.setFromQuaternion(quaternion)
