@@ -3,28 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Glove</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
-<style>
-    body {
-	    margin: 0;
-		overflow: hidden;
-    }
-    #overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    #datos {
-        color: white;
-    }
-
-  </style>
 <body>
-    <div id="overlay">
-        <h2 class="renderer_label" id="datos"></h2>
-    </div>
+    <div class="content">
+        <div class="cards">
+          <div class="card">
+            <p class="card-title">Cuaternión</p>
+            <p><span class="reading">X: <span id="cuaternionX"></p>
+            <p><span class="reading">Y: <span id="cuaternionY"></p>
+            <p><span class="reading">Z: <span id="cuaternionZ"></p>
+            <p><span class="reading">W: <span id="cuaternionW"></p>
+          </div>
+        </div>
+        <div id="canvas"></div>
+    </div>    
+    
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/main.js"></script>
 </body>

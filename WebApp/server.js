@@ -8,6 +8,7 @@ const io = new Server(server);
 
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
 app.use('/main.js', express.static(__dirname + '/views/main.js'));
+app.use('/style.css', express.static(__dirname + '/views/style.css'));
 app.use('/three/three.module.js', express.static(__dirname + '/node_modules/three/build/three.module.js'));
 app.set('PORT', port)
 
@@ -26,11 +27,7 @@ server.on('connection', (socket) => {
 
 // POST route
 app.post('/data', (req, res) => {
-  const postData = req.body;
-  // Conversion de grados a radianes
-  // postData.x = - postData.x * Math.PI / 180;
-  // postData.y = - postData.y * Math.PI / 180;
-  // postData.z = - postData.z * Math.PI / 180;
+  const postData = JSON.parse(JSON.stringify(req.body));
   io.emit('data', postData);
   console.log(postData)
   res.json({ message: 'POST request received', data: postData });
