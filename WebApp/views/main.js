@@ -1,8 +1,8 @@
 import * as THREE from '/three/three.module.js';
 
 var camera, scene, scene1, scene2, renderer;
-var geometry, material, mesh, edges, line;
-var geometry2, material2, mesh2
+var geometry, material, mesh;
+var geometry2;
 var container;
 var canvasWidth, canvasHeight;
 var quaternion;
@@ -29,14 +29,10 @@ function init() {
     geometry = new THREE.BoxGeometry( 18, 18, 18 );
     material = new THREE.MeshNormalMaterial();
     mesh = new THREE.Mesh( geometry, material );
+    mesh.name = "mesh";
     scene1.add( mesh );
     axesHelper.setColors(new THREE.Color('rgb(0,0,255)'), new THREE.Color('rgb(0,255,0)'), new THREE.Color('rgb(255,0,0)'));
     scene1.add(axesHelper);
-
-    // Agrega lineas blancas para delimitar los bordes de las caras del cubo
-    edges = new THREE.EdgesGeometry( geometry );
-    line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0x222021 } ) ); 
-    scene1.add( line );
     
     // Crea la escena
     scene2 = new THREE.Scene();
@@ -44,9 +40,9 @@ function init() {
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
     geometry2 = new THREE.SphereGeometry( 15, 32, 16 );
-    material2 = new THREE.MeshNormalMaterial();
-    mesh2 = new THREE.Mesh( geometry2, material2 );
-    scene2.add( mesh2 );
+    mesh = new THREE.Mesh( geometry2, material );
+    mesh.name = "mesh";
+    scene2.add( mesh );
     
     // Inicializa el renderizador, habilitando el antialiasing
     renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -72,16 +68,14 @@ function init() {
 
 function render(){
     socket.on('data', (data) => {
-        // document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
-        // document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
-        // document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
-        // document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
+        document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
+        document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
+        document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
+        document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
 
         quaternion = new THREE.Quaternion(parseFloat(data.SEq_1), parseFloat(data.SEq_2), parseFloat(data.SEq_3), parseFloat(data.SEq_4));
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
-        mesh.rotation.setFromQuaternion(quaternion)
-        if(scene == scene1)
-            line.rotation.setFromQuaternion(quaternion)
+        scene.getObjectByName('mesh').rotation.setFromQuaternion(quaternion);
     });
     
     renderer.render( scene, camera );
@@ -94,7 +88,7 @@ function resize(){
     renderer.setSize( container.offsetWidth, container.offsetHeight );
 }
 
-changeSceneButton.onclick = function(elem){
+changeSceneButton.onclick = function(){
     console.log("Entra a la funcion")
     if(scene == scene1)
         scene = scene2;
