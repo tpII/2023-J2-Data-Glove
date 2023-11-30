@@ -40,10 +40,11 @@ function init() {
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
 
-    geometry = new THREE.CylinderGeometry(0, 14, 12, 4, 1)
+    geometry = new THREE.CylinderGeometry(14, 14, 12, 10, 1)
     mesh = new THREE.Mesh(geometry, material);
     // scene.add(pyramid);
-    // geometry2 = new THREE.SphereGeometry( 15, 32, 16 );
+    // geometry2 = new THREE.SphereGeometry( 15, 8, 5 );
+    // material = new THREE.MeshBasicMaterial({color: 0xffff00})
     // mesh = new THREE.Mesh( geometry2, material );
     mesh.name = "mesh";
     scene2.add( mesh );
@@ -68,20 +69,24 @@ function init() {
 
     scene = scene1;
     changeSceneButton = document.getElementById('scene1');
+    quaternion = new THREE.Quaternion();
 }
 
 function render(){
     socket.on('data', (data) => {
-        if(data.potenciometro >= 0 && data.potenciometro <= 100)
-            updateProgressBar(data.potenciometro);
-        document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
-        document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
-        document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
-        document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
+        // if(data.potenciometro >= 0 && data.potenciometro <= 100)
+            updateProgressBar(data.POT);
+           
+        // document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
+        // document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
+        // document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
+        // document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
 
-        quaternion = new THREE.Quaternion(parseFloat(data.SEq_1), parseFloat(data.SEq_2), parseFloat(data.SEq_3), parseFloat(data.SEq_4));
+        quaternion.set(parseFloat(data.SEq_1), parseFloat(data.SEq_2), parseFloat(data.SEq_3), parseFloat(data.SEq_4));
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
         scene.getObjectByName('mesh').rotation.setFromQuaternion(quaternion);
+        
+        // scene.getObjectByName('mesh').scale.x = (data.POT/10);
     });
 
     // scene.getObjectByName('mesh').rotation.x += 0.01;
