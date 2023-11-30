@@ -40,7 +40,7 @@ function init() {
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
 
-    geometry = new THREE.CylinderGeometry(0, 18, 18, 4, 1)
+    geometry = new THREE.CylinderGeometry(0, 14, 12, 4, 1)
     mesh = new THREE.Mesh(geometry, material);
     // scene.add(pyramid);
     // geometry2 = new THREE.SphereGeometry( 15, 32, 16 );
@@ -72,6 +72,8 @@ function init() {
 
 function render(){
     socket.on('data', (data) => {
+        if(data.potenciometro >= 0 && data.potenciometro <= 100)
+            updateProgressBar(data.potenciometro);
         document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
         document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
         document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
@@ -81,6 +83,9 @@ function render(){
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
         scene.getObjectByName('mesh').rotation.setFromQuaternion(quaternion);
     });
+
+    // scene.getObjectByName('mesh').rotation.x += 0.01;
+    // scene.getObjectByName('mesh').rotation.y += 0.01;
     
     renderer.render( scene, camera );
     requestAnimationFrame(render);
@@ -97,4 +102,10 @@ changeSceneButton.onclick = function(){
     if(scene == scene1)
         scene = scene2;
     else scene = scene1;
+}
+
+function updateProgressBar(progress) {
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = `${progress}%`;
+    progressBar.innerHTML = `${progress}%`;
 }
