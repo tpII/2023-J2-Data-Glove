@@ -39,8 +39,12 @@ function init() {
     scene2.background = new THREE.Color(0xffffff);
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
-    geometry2 = new THREE.SphereGeometry( 15, 32, 16 );
-    mesh = new THREE.Mesh( geometry2, material );
+
+    geometry = new THREE.CylinderGeometry(0, 18, 18, 4, 1)
+    mesh = new THREE.Mesh(geometry, material);
+    // scene.add(pyramid);
+    // geometry2 = new THREE.SphereGeometry( 15, 32, 16 );
+    // mesh = new THREE.Mesh( geometry2, material );
     mesh.name = "mesh";
     scene2.add( mesh );
     
