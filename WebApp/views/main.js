@@ -58,18 +58,17 @@ function init() {
 }
 
 function render(){
+    socket.removeAllListeners('data');
     socket.on('data', (data) => {
-        // if(data.potenciometro >= 0 && data.potenciometro <= 100)
-            
         if(Math.abs(data.POT - potAnterior) > 2){
             potAnterior = data.POT;
             updateProgressBar(data.POT);
             scene.getObjectByName('mesh').scale.x = (data.POT/100);
         }
-        // document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
-        // document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
-        // document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
-        // document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
+        document.getElementById('cuaternionX').innerHTML = parseFloat(data.SEq_1).toFixed(4);
+        document.getElementById('cuaternionY').innerHTML = parseFloat(data.SEq_2).toFixed(4);
+        document.getElementById('cuaternionZ').innerHTML = parseFloat(data.SEq_3).toFixed(4);
+        document.getElementById('cuaternionW').innerHTML = parseFloat(data.SEq_4).toFixed(4);
 
         quaternion.set(parseFloat(data.SEq_1), parseFloat(data.SEq_2), parseFloat(data.SEq_3), parseFloat(data.SEq_4));
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
@@ -77,13 +76,8 @@ function render(){
         quaternion.y *= -1;
         //quaternion.z *= -1;
         scene.getObjectByName('mesh').rotation.setFromQuaternion(quaternion);
-        
-        
+        socket.sendBuffer = [];
     });
-
-    // scene.getObjectByName('mesh').rotation.x += 0.01;
-    // scene.getObjectByName('mesh').rotation.y += 0.01;
-    
     renderer.render( scene, camera );
     requestAnimationFrame(render);
 }
