@@ -5,6 +5,7 @@ const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server);
+var postData;
 
 app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
 app.use('/main.js', express.static(__dirname + '/views/main.js'));
@@ -27,9 +28,9 @@ server.on('connection', (socket) => {
 
 // POST route
 app.post('/data', (req, res) => {
-  const postData = JSON.parse(JSON.stringify(req.body));
+  postData = JSON.parse(JSON.stringify(req.body));
+  postData.POT = parseInt((postData.POT / 10.24));
   io.emit('data', postData);
-  console.log(postData)
   res.json({ message: 'POST request received', data: postData });
 });
 
