@@ -1,13 +1,15 @@
 #include <wifi.h>
 
+// Definimos las constantes para crear la red, el SSID y la password
 const char *ssid = "DataGlove";
 const char *password = "laTercera";
 
+// Definimos la IP y el puerto del WebServer
 const char *serverAddress = "192.168.4.7";
 const int serverPort = 80;
 
 void WiFiSetup(){
-    // Inicia el modo de punto de acceso
+    // Inicia el modo de Access Point (SoftAP) y crea la red
     WiFi.mode(WIFI_AP);
     WiFi.softAP(ssid, password);
     // Imprime la dirección IP asignada al ESP8266 en el modo AP
@@ -15,6 +17,7 @@ void WiFiSetup(){
 }
 
 void WiFiSend(String data) {
+  // Creamos un objeto del tipo WiFiClient para poder interactuar en la red
   WiFiClient client;
 
   // Intenta conectarse al servidor Node.js
