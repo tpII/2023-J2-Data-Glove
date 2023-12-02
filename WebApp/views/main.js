@@ -24,34 +24,18 @@ function init() {
     camera = new THREE.PerspectiveCamera( 75, canvasWidth / canvasHeight, 0.01, 1000 );
     
     // Crea la escena
-    scene1 = new THREE.Scene();
-    scene1.background = new THREE.Color(0xffffff);
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
 
     // Crea la figura 3D y le agrega una "malla" con la textura de la figura
     geometry = new THREE.BoxGeometry( 18, 18, 18 );
     material = new THREE.MeshNormalMaterial();
     mesh = new THREE.Mesh( geometry, material );
     mesh.name = "mesh";
-    scene1.add( mesh );
-    quaternion.set(1, 0, 0, 0);
+    scene.add( mesh );
     
     axesHelper.setColors(new THREE.Color('rgb(0,0,255)'), new THREE.Color('rgb(0,255,0)'), new THREE.Color('rgb(255,0,0)'));
-    scene1.add(axesHelper);
-    scene1.getObjectByName('mesh').rotation.setFromQuaternion(quaternion);
-    // Crea la escena
-    scene2 = new THREE.Scene();
-    scene2.background = new THREE.Color(0xffffff);
-
-    // Crea la figura 3D y le agrega una "malla" con la textura de la figura
-
-    geometry = new THREE.CylinderGeometry(14, 14, 12, 10, 1)
-    mesh = new THREE.Mesh(geometry, material);
-    // scene.add(pyramid);
-    // geometry2 = new THREE.SphereGeometry( 15, 8, 5 );
-    // material = new THREE.MeshBasicMaterial({color: 0xffff00})
-    // mesh = new THREE.Mesh( geometry2, material );
-    mesh.name = "mesh";
-    scene2.add( mesh );
+    scene.add(axesHelper);
     
     // Inicializa el renderizador, habilitando el antialiasing
     renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -71,10 +55,6 @@ function init() {
     document.getElementById('cuaternionY').innerHTML = "0";
     document.getElementById('cuaternionZ').innerHTML = "0";
     document.getElementById('cuaternionW').innerHTML = "0";
-
-    scene = scene1;
-    changeSceneButton = document.getElementById('scene1');
-    
 }
 
 function render(){
@@ -112,13 +92,6 @@ function resize(){
     camera.aspect = container.offsetWidth / container.offsetHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( container.offsetWidth, container.offsetHeight );
-}
-
-changeSceneButton.onclick = function(){
-    console.log("Entra a la funcion")
-    if(scene == scene1)
-        scene = scene2;
-    else scene = scene1;
 }
 
 function updateProgressBar(progress) {
