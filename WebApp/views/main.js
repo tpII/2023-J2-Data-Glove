@@ -72,9 +72,7 @@ function render(){
 
         quaternion.set(parseFloat(data.SEq_1), parseFloat(data.SEq_2), parseFloat(data.SEq_3), parseFloat(data.SEq_4));
         // Rota la figura un cierto angulo en radianes, determinado por los valores (x, y, z)
-        //quaternion.w *= -1;
         quaternion.y *= -1;
-        //quaternion.z *= -1;
         scene.getObjectByName('mesh').rotation.setFromQuaternion(quaternion);
         socket.sendBuffer = [];
     });
