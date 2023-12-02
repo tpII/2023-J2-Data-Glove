@@ -1,19 +1,19 @@
 import * as THREE from '/three/three.module.js';
 
-var camera, scene, scene1, scene2, renderer;
+var camera, scene, renderer;
 var geometry, material, mesh;
-var geometry2;
 var container;
 var canvasWidth, canvasHeight;
 var quaternion;
 const socket = io();
-var changeSceneButton;
 var potAnterior = 0;
+var progressBar;
 
 init();
 render();
 
 function init() {
+    progressBar = document.getElementById('progress-bar');
     quaternion = new THREE.Quaternion();
     const axesHelper = new THREE.AxesHelper(5);
     container = document.getElementById('canvas');
@@ -95,7 +95,6 @@ function resize(){
 }
 
 function updateProgressBar(progress) {
-    const progressBar = document.getElementById('progress-bar');
     progressBar.style.width = `${progress}%`;
     progressBar.innerHTML = `${progress}%`;
 }
