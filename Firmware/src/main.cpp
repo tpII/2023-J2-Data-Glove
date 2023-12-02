@@ -15,10 +15,10 @@ void setup() {
 void loop() {
   // Maneja las solicitudes del servidor
   data = MPURead();
-  count++;
   if(count == 3){
     count = 0;
     WiFiSend(data);
   }
   delay(20);
+  count++;
 }
