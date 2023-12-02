@@ -10,16 +10,22 @@
     <div class="content">
         <div class="cards">
           <div class="card">
-            <p class="card-title">Cuaternión</p>
+            <p class="card-title">Componentes del cuaternión</p>
             <p><span class="reading">X: <span id="cuaternionX"></p>
             <p><span class="reading">Y: <span id="cuaternionY"></p>
             <p><span class="reading">Z: <span id="cuaternionZ"></p>
             <p><span class="reading">W: <span id="cuaternionW"></p>
           </div>
+          <div class="card">
+            <p class="card-title">Ancho de figura</p>
+            <div id="progress-container">
+              <div id="progress-bar">0%</div>
+            </div>
+          </div>
         </div>
-        <div id="canvas"></div>
+        
     </div>    
-    
+    <div id="canvas"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/main.js"></script>
 </body>
