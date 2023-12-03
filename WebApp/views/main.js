@@ -15,7 +15,7 @@ render();
 function init() {
     progressBar = document.getElementById('progress-bar');
     quaternion = new THREE.Quaternion();
-    const axesHelper = new THREE.AxesHelper(5);
+    //const axesHelper = new THREE.AxesHelper(5);
     container = document.getElementById('canvas');
     document.body.appendChild(container);
     canvasWidth = container.offsetWidth;
@@ -34,8 +34,8 @@ function init() {
     mesh.name = "mesh";
     scene.add( mesh );
     
-    axesHelper.setColors(new THREE.Color('rgb(0,0,255)'), new THREE.Color('rgb(0,255,0)'), new THREE.Color('rgb(255,0,0)'));
-    scene.add(axesHelper);
+    /*axesHelper.setColors(new THREE.Color('rgb(0,0,255)'), new THREE.Color('rgb(0,255,0)'), new THREE.Color('rgb(255,0,0)'));
+    scene.add(axesHelper);*/
     
     // Inicializa el renderizador, habilitando el antialiasing
     renderer = new THREE.WebGLRenderer( { antialias: true } );
